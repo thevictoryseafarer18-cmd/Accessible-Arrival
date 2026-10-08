@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f6f3" />
+    <meta name="description" content="A calm, accessible way to notice and respond to doorbell events." />
+    <title>Accessible Arrival — Door alerts, your way</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script type="module" src="src/main.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <a class="brand" href="#main-content" aria-label="Accessible Arrival home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none">
+            <path d="M12 39V13.5L24 7l12 6.5V39" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M18 39V21h12v18M23 29h.1" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M8 39h32" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </span>
+        <span class="brand-copy">
+          <strong>Accessible Arrival</strong>
+          <span>Door alerts, your way</span>
+        </span>
+      </a>
+      <div class="header-badges" aria-label="Connection and privacy status">
+        <span class="badge badge-demo"><span class="badge-dot" aria-hidden="true"></span>Demo simulator</span>
+        <span class="header-note">No Ring connection · Local demo</span>
+      </div>
+    </header>
+
+    <main class="page-shell" id="main-content">
+      <section class="hero" aria-labelledby="welcome-title">
+        <div class="hero-copy">
+          <p class="eyebrow hero-eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> A more welcoming front door</p>
+          <h1 id="welcome-title">Door alerts that work for you.</h1>
+          <p class="hero-description">A clear, calm heads-up—with choices for how you notice, respond, and ask for support.</p>
+          <div class="hero-summary" aria-label="Your current alert profile">
+            <span class="hero-summary-item"><span class="summary-symbol" aria-hidden="true">◉</span><span id="summary-alert-style">Visual alerts</span></span>
+            <span class="hero-summary-item"><span class="summary-symbol" aria-hidden="true">⌂</span><span id="summary-caregiver">Caregiver check-in off</span></span>
+            <span class="hero-summary-item"><span class="summary-symbol" aria-hidden="true">◷</span><span id="summary-quiet">Quiet hours off</span></span>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="hero-art-halo"></div>
+          <div class="hero-door">
+            <svg viewBox="0 0 140 168" fill="none">
+              <path d="M22 157V19L70 7l48 12v138" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M39 157V36l31-8 31 8v121" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M84 95h.1" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
+              <path d="M12 157h116" stroke="currentColor" stroke-width="4" stroke-linecap="round" />
+              <path d="M50 63c5-6 12-9 20-9 9 0 17 4 22 11" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+              <path d="M58 73c3-3 7-5 12-5 5 0 9 2 12 5" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+            </svg>
+            <span class="hero-door-label">A clear signal, at your pace</span>
+          </div>
+          <span class="hero-sparkle sparkle-one">✳</span>
+          <span class="hero-sparkle sparkle-two">·</span>
+        </div>
+      </section>
+
+      <div class="notice" id="app-notice" hidden>
+        <span class="notice-icon" aria-hidden="true">i</span>
+        <p id="app-notice-text"></p>
+        <button class="notice-dismiss" id="dismiss-notice" type="button" aria-label="Dismiss message">×</button>
+      </div>
+      <div class="storage-warning" id="storage-warning" hidden role="status">
+        <strong>Not saving between visits.</strong> Browser storage is unavailable, so your settings and demo events will only last for this session.
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="primary-column">
+          <section class="panel live-panel" aria-labelledby="active-heading">
+            <div class="section-heading live-heading">
+              <div>
+                <p class="eyebrow">RIGHT NOW</p>
+                <h2 id="active-heading" tabindex="-1">Doorway alerts</h2>
+              </div>
+              <span class="count-pill" id="active-count">No active alerts</span>
+            </div>
+
+            <div class="active-alerts" id="active-alerts">
+              <div class="empty-state empty-alert">
+                <span class="empty-illustration" aria-hidden="true">⌂</span>
+                <div>
+                  <h3>You’re all caught up</h3>
+                  <p>When there’s a doorbell event, a clear alert will appear here.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="simulate-box">
+              <div class="simulate-copy">
+                <span class="simulate-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+                <div>
+                  <h3>Try a demo event</h3>
+                  <p>Creates a clearly labeled test alert. Nothing is sent.</p>
+                </div>
+              </div>
+              <div class="simulate-controls">
+                <label class="field-label" for="demo-entrance">Entrance</label>
+                <select id="demo-entrance" class="select-control">
+                  <option value="Front entrance">Front entrance</option>
+                  <option value="Side entrance">Side entrance</option>
+                </select>
+                <button class="button button-primary simulate-button" id="simulate-event" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  Simulate doorbell event
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel inbox-panel" aria-labelledby="inbox-heading">
+            <div class="section-heading">
+              <div>
+                <p class="eyebrow">ONLY IF YOU SET IT UP</p>
+                <h2 id="inbox-heading">Caregiver demo inbox</h2>
+              </div>
+              <span class="badge badge-local">In-app only</span>
+            </div>
+            <p class="panel-intro">These are simulated check-ins inside this demo. No texts, calls, or messages are sent.</p>
+            <div id="caregiver-feed" class="caregiver-feed">
+              <div class="inbox-empty">
+                <span aria-hidden="true" class="inbox-empty-icon">✓</span>
+                <p>No caregiver check-ins yet. If enabled, demo notices will appear here only.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="panel history-panel" aria-labelledby="history-heading">
+            <div class="section-heading history-heading-row">
+              <div>
+                <p class="eyebrow">ON THIS DEVICE</p>
+                <h2 id="history-heading" tabindex="-1">Recent events</h2>
+                <p class="history-caption" id="history-caption">Example entries are labeled. Simulated events stay in this browser.</p>
+              </div>
+              <button class="text-button clear-button" id="clear-history" type="button">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 13h10l1-13M9 7V4h6v3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                Clear history
+              </button>
+            </div>
+            <div class="clear-confirm" id="clear-confirm" hidden>
+              <div>
+                <strong>Clear every saved event and open alert?</strong>
+                <p>This also removes in-app caregiver demo notices. Your alert preferences will stay as they are.</p>
+              </div>
+              <div class="confirm-actions">
+                <button class="button button-secondary button-compact" id="cancel-clear" type="button">Keep history</button>
+                <button class="button button-danger button-compact" id="confirm-clear" type="button">Erase history</button>
+              </div>
+            </div>
+            <ul class="history-list" id="history-list" aria-label="Recent door events">
+              <li class="history-row history-loading">Loading local event history…</li>
+            </ul>
+          </section>
+        </div>
+
+        <aside class="settings-column" aria-label="Alert preferences">
+          <section class="panel settings-panel" aria-labelledby="settings-heading">
+            <div class="section-heading settings-title">
+              <div>
+                <p class="eyebrow">MADE FOR YOU</p>
+                <h2 id="settings-heading">Alert preferences</h2>
+              </div>
+              <span class="settings-mark" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v2m0 14v2m9-9h-2M5 12H3m15.36-6.36-1.42 1.42M7.06 16.94l-1.42 1.42m12.72 0-1.42-1.42M7.06 7.06 5.64 5.64M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" /></svg>
+              </span>
+            </div>
+
+            <fieldset class="alert-style-fieldset">
+              <legend>How would you like to notice?</legend>
+              <p class="field-hint">Every event stays visible on this screen. Choose whether it should also be spoken aloud.</p>
+              <div class="style-options">
+                <label class="style-option">
+                  <input type="radio" name="alert-style" value="visual" />
+                  <span class="style-option-body">
+                    <span class="style-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" /><circle cx="12" cy="12" r="2.7" stroke="currentColor" stroke-width="1.7" /></svg></span>
+                    <span class="style-copy"><strong>Visual only</strong><span>On-screen alert; speech off.</span></span>
+                  </span>
+                </label>
+                <label class="style-option">
+                  <input type="radio" name="alert-style" value="spoken" />
+                  <span class="style-option-body">
+                    <span class="style-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M11 5 6 9H3v6h3l5 4V5Zm4 4a4 4 0 0 1 0 6m3-9a8 8 0 0 1 0 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+                    <span class="style-copy"><strong>Spoken</strong><span>Speak the event; details stay on screen.</span></span>
+                  </span>
+                </label>
+                <label class="style-option">
+                  <input type="radio" name="alert-style" value="both" />
+                  <span class="style-option-body">
+                    <span class="style-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg></span>
+                    <span class="style-copy"><strong>Both</strong><span>Voice plus a prominent visual alert.</span></span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="toggle-list display-toggles">
+              <label class="toggle-row">
+                <span class="toggle-copy">
+                  <span class="toggle-icon contrast-icon" aria-hidden="true">◐</span>
+                  <span><strong>High contrast</strong><small>Stronger text and outlines.</small></span>
+                </span>
+                <span class="switch-wrap">
+                  <input id="high-contrast" type="checkbox" role="switch" />
+                  <span class="switch-track" aria-hidden="true"></span>
+                </span>
+              </label>
+              <label class="toggle-row">
+                <span class="toggle-copy">
+                  <span class="toggle-icon large-icon" aria-hidden="true">A<span>a</span></span>
+                  <span><strong>Large text</strong><small>Make labels and details bigger.</small></span>
+                </span>
+                <span class="switch-wrap">
+                  <input id="large-text" type="checkbox" role="switch" />
+                  <span class="switch-track" aria-hidden="true"></span>
+                </span>
+              </label>
+            </div>
+
+            <div class="speech-tools" aria-labelledby="speech-tools-heading">
+              <div>
+                <h3 id="speech-tools-heading">Spoken alert test</h3>
+                <p>Try the voice on this device. The test only speaks when you press the button.</p>
+              </div>
+              <div class="speech-buttons">
+                <button class="button button-secondary button-compact" id="test-speech" type="button">
+                  <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5Zm4 4a4 4 0 0 1 0 6" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                  Test spoken alert
+                </button>
+                <button class="text-button turn-off-speech" id="turn-off-speech" type="button" hidden>Turn spoken alerts off</button>
+              </div>
+              <p class="speech-status" id="speech-status" role="status" aria-live="polite"></p>
+            </div>
+
+            <div class="setting-divider" aria-hidden="true"></div>
+
+            <section class="setting-subsection caregiver-settings" id="caregiver-card" aria-labelledby="caregiver-heading">
+              <div class="subsection-heading">
+                <span class="subsection-icon caregiver-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke="currentColor" stroke-width="1.7" /><path d="M3.5 19v-1a5.5 5.5 0 0 1 11 0v1h-11Zm13-8.5a3 3 0 1 0-1-5.83m2 9.83a4.5 4.5 0 0 1 3 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+                <div>
+                  <h3 id="caregiver-heading" tabindex="-1">Caregiver check-in</h3>
+                  <p id="caregiver-summary">Off. No automatic caregiver check-in will be created.</p>
+                </div>
+              </div>
+              <button class="button button-secondary setup-button" id="setup-caregiver" type="button">Set up a trusted caregiver</button>
+
+              <div class="setup-disclosure" id="caregiver-disclosure" hidden>
+                <h4 id="disclosure-heading" tabindex="-1">Before you switch it on</h4>
+                <p>In a real connected version, a check-in could share only:</p>
+                <ul>
+                  <li>Which entrance had an event</li>
+                  <li>The event type and time</li>
+                  <li>Whether you had acknowledged the alert</li>
+                </ul>
+                <p class="privacy-callout"><strong>This demo stays on this device.</strong> It adds a notice to the demo inbox only—no one is contacted. It does not share visitor identity, audio, or video.</p>
+                <label class="consent-row" for="caregiver-consent">
+                  <input id="caregiver-consent" type="checkbox" />
+                  <span>I understand this is a local demo, not a real message.</span>
+                </label>
+                <div class="disclosure-actions">
+                  <button class="text-button" id="cancel-caregiver-setup" type="button">Not now</button>
+                  <button class="button button-primary button-compact" id="enable-caregiver" type="button" disabled>Enable demo check-in</button>
+                </div>
+              </div>
+
+              <div class="caregiver-config" id="caregiver-config" hidden>
+                <p class="enabled-label"><span class="enabled-check" aria-hidden="true">✓</span> Demo check-in is on. Notices stay in this app.</p>
+                <label class="form-label" for="caregiver-label">Caregiver display label <span>Optional · stored on this device</span></label>
+                <input class="text-control" id="caregiver-label" type="text" maxlength="40" autocomplete="off" placeholder="e.g. My trusted person" />
+                <label class="form-label" for="escalation-delay">Wait before a demo check-in</label>
+                <select class="select-control" id="escalation-delay">
+                  <option value="10">10 seconds (quick demo)</option>
+                  <option value="30">30 seconds</option>
+                  <option value="60">1 minute</option>
+                  <option value="120">2 minutes</option>
+                </select>
+                <p class="field-hint delay-hint">If you don’t acknowledge an alert in time, a simulated notice appears in the demo inbox. No external notification is sent.</p>
+                <button class="text-button turn-off-caregiver" id="turn-off-caregiver" type="button">Turn off automatic check-ins</button>
+              </div>
+            </section>
+
+            <div class="setting-divider" aria-hidden="true"></div>
+
+            <section class="setting-subsection quiet-settings" aria-labelledby="quiet-heading">
+              <div class="subsection-heading quiet-heading-row">
+                <span class="subsection-icon quiet-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none"><path d="M19.2 15.2A8 8 0 0 1 8.8 4.8 8 8 0 1 0 19.2 15.2Z" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+                <div>
+                  <h3 id="quiet-heading">Quiet hours</h3>
+                  <p>Pause spoken door alerts at chosen times.</p>
+                </div>
+              </div>
+              <label class="toggle-row quiet-toggle-row">
+                <span class="toggle-copy"><span><strong>Enable quiet hours</strong><small>Visual alerts still appear.</small></span></span>
+                <span class="switch-wrap">
+                  <input id="quiet-enabled" type="checkbox" role="switch" />
+                  <span class="switch-track" aria-hidden="true"></span>
+                </span>
+              </label>
+              <div class="time-range" id="quiet-range">
+                <div class="time-field"><label class="form-label" for="quiet-start">From</label><input class="text-control time-control" id="quiet-start" type="time" value="22:00" /></div>
+                <span class="time-separator" aria-hidden="true">to</span>
+                <div class="time-field"><label class="form-label" for="quiet-end">Until</label><input class="text-control time-control" id="quiet-end" type="time" value="07:00" /></div>
+              </div>
+              <p class="quiet-explainer">During quiet hours, spoken alerts are paused. Visual alerts stay on, and any caregiver setting is unchanged.</p>
+              <p class="quiet-status" id="quiet-status"></p>
+            </section>
+          </section>
+        </aside>
+      </div>
+
+      <p class="sr-only" id="sr-announcer" role="status" aria-live="polite" aria-atomic="true"></p>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span class="footer-brand"><span class="footer-mark" aria-hidden="true">⌂</span> Accessible Arrival</span>
+        <span>Demo simulator · No Ring account linked · No external messages sent</span>
+        <a href="README.md">About this demo</a>
+      </div>
+    </footer>
+  </body>
+</html>
